@@ -16,10 +16,10 @@ FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALA
 	<type type="windows.dotnetService" 
               deployable-type="windows.dotnetServiceSpec" 
               container-type="overthere.Host"  
-              extends="powershell.ExtensiblePowerShellDeployed"
+              extends="powershell.ExtensiblePowerShellDeployedArtifact"
               description="Windows DotNet service" >
         <generate-deployable type="windows.dotnetServiceSpec" 
-                             extends="powershell.BasePowerShellDeployable"
+                             extends="powershell.BasePowerShellDeployableFolderArtifact"
                              description="Specification of a DotNet Windows service" />
 
         <property name="createScript"   default="windows/install-dotnetservice.ps1" hidden="true" />
@@ -36,7 +36,7 @@ FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALA
                   description="Name of the service. Defaults to the name of the deployed if not specified" />
         <property name="serviceDisplayName" required="false"
                   description="Display name of this service" />
-	<property name="DotNetVersion" required="truel" default="v4.0.12345"
+	<property name="DotNetVersion" default="v4.0.12345"
                   description="Dot Net Version v4.5, v4.0, v2.0" />
         <property name="serviceDescription" required="false"
                   description="Description of this service" />
@@ -49,6 +49,9 @@ FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALA
             <rule type="regex" pattern="[Aa]utomatic|[Mm]anual|[Dd]isabled"
                   message="Startup Type must be one of the following: Automatic, Manual, Disabled" />
         </property>
+        <property name="targetPath"       kind="string"  hidden="false" />
+        <property name="targetPathShared" kind="boolean" default="true" hidden="false" />
+        <property name="createTargetPath" kind="boolean" default="true" hidden="false" />
 
         <property name="username" required="false" category="Log On" 
                   description="Username of the account this service should log on as" />

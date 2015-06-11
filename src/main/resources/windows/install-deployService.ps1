@@ -4,6 +4,8 @@
 #  FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
 ##############################################################
 
+$serviceName = if($deployed.serviceName) { $deployed.serviceName } else { $deployed.name }
+$displayName = if($deployed.serviceDisplayName) { $deployed.serviceDisplayName } else { $serviceName }
 $description = if($deployed.serviceDescription) { $deployed.serviceDescription } else { $serviceName }
 
 function Expand-ZIPFile($file, $destination) {
