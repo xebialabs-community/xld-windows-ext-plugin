@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synthetic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.xebialabs.com/deployit/synthetic"
+           xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
+
+<!--
+THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS
+FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
+-->
+<!--
+     *********************************************************************************
+     *    Windows dotNet Service Installation
+     *********************************************************************************
+-->
+	<type type="windows.dotnetService" 
+              deployable-type="windows.dotnetServiceSpec" 
+              container-type="overthere.Host"  
+              extends="powershell.ExtensiblePowerShellDeployed"
+              description="Windows DotNet service" >
+        <generate-deployable type="windows.dotnetServiceSpec" 
+                             extends="powershell.BasePowerShellDeployable"
+                             description="Specification of a DotNet Windows service" />
+
+        <property name="createScript"   default="windows/install-dotnetservice.ps1" hidden="true" />
+        <property name="createVerb"     default="Install" hidden="true" />
+        <property name="modifyScript"   default="windows/update-dotnetservice.ps1" hidden="true" />
+        <property name="modifyVerb"     default="Update" hidden="true" />
+        <property name="destroyScript"  default="windows/uninstall-dotnetservice.ps1" hidden="true" />
+        <property name="destroyVerb"    default="Uninstall" hidden="true" />
+        <property name="startScript"    default="windows/start-service.ps1" hidden="true" />
+        <property name="stopScript"     default="windows/stop-service.ps1" hidden="true" />
+        <property name="discoverScript" default="windows/inspect-services.ps1" hidden="true" />
+
+        <property name="serviceName" required="false"
+                  description="Name of the service. Defaults to the name of the deployed if not specified" />
+        <property name="serviceDisplayName" required="false"
+                  description="Display name of this service" />
+	<property name="DotNetVersion" required="truel" default="v4.0.12345"
+                  description="Dot Net Version v4.5, v4.0, v2.0" />
+        <property name="serviceDescription" required="false"
+                  description="Description of this service" />
+        <property name="binaryPathName"
+                  description="Path of the service binary" />
+        <property name="dependsOn" kind="list_of_string" required="false"
+                  description="Services this service depends on" />
+        <property name="startupType" default="Automatic"
+                  description="Startup type is this service. Defaults to Automatic">
+            <rule type="regex" pattern="[Aa]utomatic|[Mm]anual|[Dd]isabled"
+                  message="Startup Type must be one of the following: Automatic, Manual, Disabled" />
+        </property>
+
+        <property name="username" required="false" category="Log On" 
+                  description="Username of the account this service should log on as" />
+        <property name="password" required="false" password="true" category="Log On" 
+                  description="Password of the account this service should log on as" />
+
+        <property name="startTimeout" kind="integer" default="30"
+                  category="Advanced" label="Start timeout (seconds)" 
+                  description="Amount of seconds to wait for the service to start. Note: If the service goes into the Pending state, the actual timeout used will be the double the specified amount." />
+        <property name="stopTimeout" kind="integer" default="30"
+                  category="Advanced" label="Stop timeout (seconds)" 
+                  description="Amount of seconds to wait for the service to start. Note: If the service goes into the Pending state, the actual timeout used will be the double the specified amount." />
+
+        <property name="stopStartOnNoop" kind="boolean" required="false" default="true"
+                  category="Deployment" label="Stop and start on every deployment" 
+                  description="If set to true, this service is stopped and started when another component in the same package is deployed" />
+    </type>
+<!--
+     *********************************************************************************
+     *    Windows Deploy Service Application
+     *********************************************************************************
+-->
+    <type type="windows.deployService"
+          deployable-type="windows.deployServiceSpec"
+          container-type="overthere.Host"
+          extends="powershell.ExtensiblePowerShellDeployedArtifact"
+          description="Windows service" >
+        <generate-deployable type="windows.deployServiceSpec"
+                             extends="powershell.BasePowerShellDeployableFolderArtifact"
+                             description="Specification of a Windows service" />
+
+        <property name="createScript"   default="windows/install-deployService.ps1" hidden="true" />
+        <property name="createVerb"     default="Install" hidden="true" />
+        <property name="modifyScript"   default="windows/update-dotnetservice.ps1" hidden="true" />
+        <property name="modifyVerb"     default="Update" hidden="true" />
+        <property name="destroyScript"  default="windows/uninstall-service.ps1" hidden="true" />
+        <property name="destroyVerb"    default="Uninstall" hidden="true" />
+        <property name="startScript"    default="windows/start-service.ps1" hidden="true" />
+        <property name="stopScript"     default="windows/stop-service.ps1" hidden="true" />
+        <property name="discoverScript" default="windows/inspect-services.ps1" hidden="true" />
+
+        <property name="serviceName" required="false"
+            description="Name of the service. Defaults to the name of the deployed if not specified" />
+        <property name="serviceDisplayName" required="false"
+            description="Display name of this service" />
+        <property name="serviceDescription" required="false"
+            description="Description of this service" />
+        <property name="binaryPathName"
+            description="Path of the service binary" />
+        <property name="dependsOn" kind="list_of_string" required="false"
+            description="Services this service depends on" />
+        <property name="startupType" default="Automatic"
+            description="Startup type is this service. Defaults to Automatic">
+            <rule type="regex" pattern="[Aa]utomatic|[Mm]anual|[Dd]isabled"
+                message="Startup Type must be one of the following: Automatic, Manual, Disabled" />
+        </property>
+        <property name="targetPath"       kind="string"  hidden="false" />
+        <property name="targetPathShared" kind="boolean" default="true" hidden="false" />
+        <property name="createTargetPath" kind="boolean" default="true" hidden="false" />
+
+        <property name="username" required="false"
+                  category="Log On"
+                  description="Username of the account this service should log on as" />
+        <property name="password" required="false" password="true"
+                  category="Log On"
+                  description="Password of the account this service should log on as" />
+
+        <property name="startTimeout" kind="integer" default="30"
+                  category="Advanced" label="Start timeout (seconds)"
+                  description="Amount of seconds to wait for the service to start. Note: If the service goes into the Pending state, the actual timeout used will be the double the specified amount." />
+        <property name="stopTimeout" kind="integer" default="30"
+                  category="Advanced" label="Stop timeout (seconds)"
+                  description="Amount of seconds to wait for the service to start. Note: If the service goes into the Pending state, the actual timeout used will be the double the specified amount." />
+
+        <property name="stopStartOnNoop" kind="boolean" required="false" default="true"
+                  category="Deployment" label="Stop and start on every deployment"
+                  description="If set to true, this service is stopped and started when another component in the same package is deployed" />
+    </type>
+
+</synthetic>
