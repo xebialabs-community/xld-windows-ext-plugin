@@ -28,16 +28,19 @@ Expand-ZIPFile $deployed.file $deployed.targetPath
 
 Write-Host "Installing service [$serviceName]"
 
-if($deployed.username) {
+if( $($deployed.username) ) {
     $securePassword = $null
-    if($deployed.password) {
-        $securePassword = $deployed.password | ConvertTo-SecureString -asPlainText -Force
+    if( $($deployed.password) ) {
+        $securePassword = $($deployed.password) | ConvertTo-SecureString -asPlainText -Force
     } else {
         $securePassword = (new-object System.Security.SecureString)
     }
     $cred = New-Object System.Management.Automation.PSCredential($deployed.username, $securePassword)
-    New-Service -Name $serviceName -BinaryPathName $deployed.binaryPathName -DependsOn $deployed.dependsOn -Description $description -DisplayName $displayName -StartupType $deployed.startupType -Credential $cred
+    echo "New-Service -Name $serviceName -BinaryPathName $($deployed.binaryPathName) -DependsOn $($deployed.dependsOn) -Description $description -DisplayName $displayName -StartupType $($deployed.startupType) -Credential $cred"
+    New-Service -Name $serviceName -BinaryPathName $($deployed.binaryPathName) -DependsOn $($deployed.dependsOn) -Description $description -DisplayName $displayName -StartupType $($deployed.startupType) -Credential $cred
 } else {
-    New-Service -Name $serviceName -BinaryPathName $deployed.binaryPathName -DependsOn $deployed.dependsOn -Description $description -DisplayName $displayName -StartupType $deployed.startupType | Out-Null
+    echo "New-Service -Name $serviceName -BinaryPathName $($deployed.binaryPathName) -DependsOn $($deployed.dependsOn) -Description $description -DisplayName $($displayName) -StartupType $($deployed.startupType) | Out-Null"
+    New-Service -Name $serviceName -BinaryPathName $($deployed.binaryPathName) -DependsOn $($deployed.dependsOn) -Description $description -DisplayName $($displayName) -StartupType $($deployed.startupType) | Out-Null
+    #New-Service -Name $serviceName -BinaryPathName $deployed.binaryPathName -DependsOn $deployed.dependsOn -Description $description -DisplayName $displayName -StartupType $deployed.startupType | Out-Null
 }
 

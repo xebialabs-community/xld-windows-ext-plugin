@@ -8,18 +8,43 @@ $serviceName = if($deployed.serviceName) { $deployed.serviceName } else { $deplo
 $displayName = if($deployed.serviceDisplayName) { $deployed.serviceDisplayName } else { $serviceName }
 $description = if($deployed.serviceDescription) { $deployed.serviceDescription } else { $serviceName }
 
-#$installUtil = "c:\windows\microsoft.net\framework\$($deployed.dotNetVersion)\installutil.exe"
-$installUtil = "c:\windows\microsoft.net\framework\4.0.12345\installutil.exe"
-Write-Host "---------------------"
-Write-Host "installUtil = " -nonewline
-Write-Host $installUtil
-Write-Host "DotNetVer = " -nonewline
-Write-Host $deployed.dotNetVersion
-Write-Host "---------------------"
-Invoke-Command -ScriptBlock {$installUtil /u /LogToConsole=true $deployed.binaryPathName}
+function Expand-ZIPFile($file, $destination) {
+   Write-Host 'unzip $deployed.file to $deployed.targetPath'
+   $shell = new-object -com shell.application
+   $zip = $shell.NameSpace($file)
+   foreach($item in $zip.items()) {
+      $shell.Namespace($destination).copyhere($item, 0x14)
+   }
+}
+
+Write-Host 'Expand-ZIPFile $deployed.file $deployed.targetPath'
+
+if( -not (Test-Path $deployed.targetPath ) ) {
+    Write-Host "Create directory $deployed.targetPath"
+    mkdir $deployed.targetPath
+}
+
+Expand-ZIPFile $deployed.file $deployed.targetPath
+
+Write-Host "Installing service [$serviceName]"
 
 
-if($deployed.username) {
+$installUtil = "c:\windows\microsoft.net\framework\$($deployed.DotNetVersion)\installutil.exe"
+$cmd = "$installUtil /LogToConsole=true $($deployed.binaryPathName)"
+echo "---------------------"
+echo "installUtil = $installUtil"
+echo "DotNetVer = $($deployed.DotNetVersion)"
+echo "PathName  = $($deployed.binaryPathName)"
+echo "cmd       = $cmd"
+echo "---------------------"
+dir $installUtil
+$sb = [ScriptBlock]::Create( $cmd )
+Invoke-Command -ScriptBlock $sb
+Set-Service -name $serviceName -Description $deployed.ServiceDescription
+Set-Service -name $serviceName -DisplayName $deployed.ServiceDisplayName
+
+
+if( $deployed.username ) {
     $securePassword = $null
     if($deployed.password) {
         $securePassword = $deployed.password | ConvertTo-SecureString -asPlainText -Force

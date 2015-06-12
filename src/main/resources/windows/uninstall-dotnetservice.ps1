@@ -9,19 +9,21 @@ $displayName = if($deployed.serviceDisplayName) { $deployed.serviceDisplayName }
 $description = if($deployed.serviceDescription) { $deployed.serviceDescription } else { $serviceName }
  
 $installUtil = "c:\windows\microsoft.net\framework\$($deployed.DotNetVersion)\installutil.exe"
-Invoke-Command -ScriptBlock {$installUtil /u /LogToConsole=true $deployed.binaryPathName}
+$cmd = "$installUtil /u /LogToConsole=true $($deployed.binaryPathName)"
+echo "---------------------"
+echo "installUtil = $installUtil"
+echo "DotNetVer = $($deployed.DotNetVersion)"
+echo "PathName  = $($deployed.binaryPathName)"
+echo "cmd       = $cmd"
+echo "---------------------"
+dir $installUtil
+$sb = [ScriptBlock]::Create( $cmd )
+Invoke-Command -ScriptBlock $sb
 
+# Remove old service content if it's still there
+if (Test-Path $deployed.targetPath ) {
+	Write-Host "Removing old service content from [$deployed.targetPath]."
+	Remove-Item -Recurse -Force $deployed.targetPath
+}
 
-<# if($deployed.username) {
-    $securePassword = $null
-    if($deployed.password) {
-        $securePassword = $deployed.password | ConvertTo-SecureString -asPlainText -Force
-    } else {
-        $securePassword = (new-object System.Security.SecureString)
-    }
-    $cred = New-Object System.Management.Automation.PSCredential($deployed.username, $securePassword) #>
-
-<# }  else {
-
-} #>
 
