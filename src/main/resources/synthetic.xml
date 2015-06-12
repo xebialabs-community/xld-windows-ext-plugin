@@ -36,7 +36,7 @@ FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALA
                   description="Name of the service. Defaults to the name of the deployed if not specified" />
         <property name="serviceDisplayName" required="false"
                   description="Display name of this service" />
-	<property name="DotNetVersion" default="v4.0.12345"
+	<property name="DotNetVersion" default="v4.0.30319"
                   description="Dot Net Version v4.5, v4.0, v2.0" />
         <property name="serviceDescription" required="false"
                   description="Description of this service" />
