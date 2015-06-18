@@ -2,10 +2,9 @@ language: java
 deploy:
   provider: releases
   api_key:
-    secure: R6ZSdzbH6R0RBkv2aMXsPhSBoCv4746TE7jJVaJiyXVDQSbdIW4j0NTG4+lOVpoG2nA93cG42cj63aS2OPTGjWlAjIuVPTGGnUdJz0b28xwHgHipEG6G7ikkP5GpGSoy++ZKJFSOpjpXWkSt4LyB1CVzjASsiE+B8pBpDz9n1jI=
+    secure: c5cM9KmK39Q0uulW5E/J4746PT0DybNsPWgaOf5RGR/FwtF0L0pv4kjG+z3afTAHdb6D7Y08AK+gkD1Pio3vV7ltCH7Do1RyrfGCdVU2jMu1Jxm24Q+9CBlUpIv+H+gz9xobn133c6MEU3wJm6VkNYeJMVlFxMCzj5XdtgrLs+9FOCoU5VhQawtJFu2h+TGOJp1tawFyaoyq+nc//l3icUhflu9NhZN/Z2FN123EBn5PJYpsHcjl6yQ3PNqNldSrO5aJpMtLAFSgShvJIgrgzKxrBLT3wUTjx4fwFb7EzCIiWhxiLao3IlqqwtF0HdRexwhRRu5U97WKpeQz392UEPUFQI6C+KNgSN92W2JsUmhDijoamg0ynGpSQ/K4sq5OBPGjzOVwwKcHpWOc4afyZpcjkNz96ikelbeDF69IoAvwdsugszDdz/911vclmGigv8Cv1+vn7tHo0blmX2DYkdLzq9ABz0T/ZvuJNn2uDO/t7YW0G5dbw3+433fDu9E0b5NH9N7qY8gJgpmoJmeDDB78VS3FVpqW1IxpBrdeXceYkgycUG/Y8HVeaFD6wDDAyjo9kJL1cqWEb7HtUExFbc2ReBoR5OJbscM4nqk7iadYigrwaf2EmPeK2jefRzgQiSQOUwA2S6MmeBzr1XHizT+HgqHHgvWaIfNXgtrFBvQ=
   file: build/libs/windows-ext-plugin-1.0.0.jar
   on:
     all_branches: true
     tags: true
     repo: xebialabs-community/xld-windows-ext-plugin
-
