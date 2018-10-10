@@ -70,9 +70,9 @@ FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALA
                   description="If set to true, this service is stopped and started when another component in the same package is deployed" />
         <property name="startOnDeploy" kind="boolean" default="true" />
 
-        <method name="start" description="Start Service" delegate="shellScript" script="windows/start-service.ps1"/>
-        <method name="stop"  description="Stop Service" delegate="shellScript" script="windows/stop-service.ps1"/>
-        <method name="dir"  description="Stop Service" delegate="shellScript" script="windows/dir.ps1.ftl"/>    </type>
+        <method name="start" description="Start Service" delegate="dispatcherInvoker" script="windows/start-service.ps1"/>
+        <method name="stop"  description="Stop Service" delegate="dispatcherInvoker" script="windows/stop-service.ps1"/>
+    </type>
 <!--
      *********************************************************************************
      *    Windows Deploy Service Application
@@ -135,9 +135,8 @@ FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALA
                   description="If set to true, this service is stopped and started when another component in the same package is deployed" />
         <property name="startOnDeploy" kind="boolean" default="true" />
 
-        <method name="start" description="Start Service" delegate="shellScript" script="windows/start-service.ps1"/>
-        <method name="stop"  description="Stop Service" delegate="shellScript" script="windows/stop-service.ps1"/>
-        <method name="dir"  description="Stop Service" delegate="shellScript" script="windows/dir.ps1.ftl"/>
+        <method name="start" description="Start Service" delegate="dispatcherInvoker" script="windows/start-service.ps1"/>
+        <method name="stop"  description="Stop Service" delegate="dispatcherInvoker" script="windows/stop-service.ps1"/>
     </type>
 
 </synthetic>
