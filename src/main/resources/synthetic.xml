@@ -13,12 +13,12 @@ FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALA
      *    Windows dotNet Service Installation
      *********************************************************************************
 -->
-	<type type="windows.dotnetService" 
-              deployable-type="windows.dotnetServiceSpec" 
-              container-type="overthere.Host"  
+	<type type="windows.dotnetService"
+              deployable-type="windows.dotnetServiceSpec"
+              container-type="overthere.Host"
               extends="powershell.ExtensiblePowerShellDeployedArtifact"
               description="Windows DotNet service" >
-        <generate-deployable type="windows.dotnetServiceSpec" 
+        <generate-deployable type="windows.dotnetServiceSpec"
                              extends="powershell.BasePowerShellDeployableFolderArtifact"
                              description="Specification of a DotNet Windows service" />
 
@@ -53,21 +53,25 @@ FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALA
         <property name="targetPathShared" kind="boolean" default="true" hidden="false" />
         <property name="createTargetPath" kind="boolean" default="true" hidden="false" />
 
-        <property name="username" required="false" category="Log On" 
+        <property name="username" required="false" category="Log On"
                   description="Username of the account this service should log on as" />
-        <property name="password" required="false" password="true" category="Log On" 
+        <property name="password" required="false" password="true" category="Log On"
                   description="Password of the account this service should log on as" />
 
         <property name="startTimeout" kind="integer" default="30"
-                  category="Advanced" label="Start timeout (seconds)" 
+                  category="Advanced" label="Start timeout (seconds)"
                   description="Amount of seconds to wait for the service to start. Note: If the service goes into the Pending state, the actual timeout used will be the double the specified amount." />
         <property name="stopTimeout" kind="integer" default="30"
-                  category="Advanced" label="Stop timeout (seconds)" 
+                  category="Advanced" label="Stop timeout (seconds)"
                   description="Amount of seconds to wait for the service to start. Note: If the service goes into the Pending state, the actual timeout used will be the double the specified amount." />
 
         <property name="stopStartOnNoop" kind="boolean" required="false" default="true"
-                  category="Deployment" label="Stop and start on every deployment" 
+                  category="Deployment" label="Stop and start on every deployment"
                   description="If set to true, this service is stopped and started when another component in the same package is deployed" />
+        <property name="startOnDeploy" kind="boolean" default="true" />
+
+        <method name="start" description="Start Service" delegate="dispatcherInvoker" script="windows/start-service.ps1"/>
+        <method name="stop"  description="Stop Service" delegate="dispatcherInvoker" script="windows/stop-service.ps1"/>
     </type>
 <!--
      *********************************************************************************
@@ -91,7 +95,7 @@ FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALA
         <property name="destroyVerb"    default="Uninstall" hidden="true" />
         <property name="startScript"    default="windows/start-service.ps1" hidden="true" />
         <property name="stopScript"     default="windows/stop-service.ps1" hidden="true" />
-        <property name="discoverScript" default="windows/inspect-services.ps1" hidden="true" />
+        <property name="discoverProcessScript" default="windows/inspect-services.ps1" hidden="true" />
 
         <property name="serviceName" required="false"
             description="Name of the service. Defaults to the name of the deployed if not specified" />
@@ -129,6 +133,10 @@ FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALA
         <property name="stopStartOnNoop" kind="boolean" required="false" default="true"
                   category="Deployment" label="Stop and start on every deployment"
                   description="If set to true, this service is stopped and started when another component in the same package is deployed" />
+        <property name="startOnDeploy" kind="boolean" default="true" />
+
+        <method name="start" description="Start Service" delegate="dispatcherInvoker" script="windows/start-service.ps1"/>
+        <method name="stop"  description="Stop Service" delegate="dispatcherInvoker" script="windows/stop-service.ps1"/>
     </type>
 
 </synthetic>

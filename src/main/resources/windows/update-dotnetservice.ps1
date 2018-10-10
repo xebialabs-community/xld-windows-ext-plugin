@@ -93,6 +93,7 @@ if($deployed.startupType -eq "Disabled") {
     Write-Host "Not starting service [$serviceName] because it has been disabled."
 } else {
     Write-Host "Starting service [$serviceName]."
-    Start-Service-With-Timeout $serviceName $deployed.startTimeout
+    if($deployed.startOnDeploy) {
+      Start-Service-With-Timeout $serviceName $deployed.startTimeout
+    }
 }
-
