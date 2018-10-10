@@ -39,7 +39,7 @@ sourceSets {
 }
 
 import org.apache.tools.ant.filters.*
- 
+
 processResources {
     filter ReplaceTokens, tokens: [
         "project.version": project.property("version"),
@@ -69,9 +69,9 @@ license {
 task itest(dependsOn: 'itestClasses',type: Test) {
         testClassesDir = sourceSets.itest.output.classesDir
         classpath = sourceSets.itest.runtimeClasspath
-}  
+}
 
 itest.configure {
         useJUnit() {
         }
-}   
+}
