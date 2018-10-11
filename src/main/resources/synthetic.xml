@@ -33,16 +33,20 @@ FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALA
         <property name="discoverScript" default="windows/inspect-services.ps1" hidden="true" />
 
         <property name="serviceName" required="false"
-                  description="Name of the service. Defaults to the name of the deployed if not specified" />
+                  description="Name of the service. Defaults to the name of the deployed if not specified"
+                  required="true" />
         <property name="serviceDisplayName" required="false"
-                  description="Display name of this service" />
+                  description="Display name of this service"
+                  required="true"/>
 	<property name="DotNetVersion" default="v4.0.30319"
                   description="Dot Net Version v4.5, v4.0, v2.0" />
-        <property name="serviceDescription" required="false"
+        <property name="serviceDescription"
+                  required="false"
                   description="Description of this service" />
         <property name="binaryPathName"
                   description="Path of the service binary" />
-        <property name="dependsOn" kind="list_of_string" required="false"
+        <property name="dependsOn" kind="list_of_string"
+                  required="false"
                   description="Services this service depends on" />
         <property name="startupType" default="Automatic"
                   description="Startup type is this service. Defaults to Automatic">
@@ -68,7 +72,7 @@ FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALA
         <property name="stopStartOnNoop" kind="boolean" required="false" default="true"
                   category="Deployment" label="Stop and start on every deployment"
                   description="If set to true, this service is stopped and started when another component in the same package is deployed" />
-        <property name="startOnDeploy" kind="boolean" default="true" />
+        <property name="startOnDeploy" category="Deployment" kind="boolean" default="true" />
 
         <method name="start" description="Start Service" delegate="dispatcherInvoker" script="windows/start-service.ps1"/>
         <method name="stop"  description="Stop Service" delegate="dispatcherInvoker" script="windows/stop-service.ps1"/>
@@ -98,9 +102,11 @@ FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALA
         <property name="discoverProcessScript" default="windows/inspect-services.ps1" hidden="true" />
 
         <property name="serviceName" required="false"
-            description="Name of the service. Defaults to the name of the deployed if not specified" />
+            description="Name of the service. Defaults to the name of the deployed if not specified"
+            required="true" />
         <property name="serviceDisplayName" required="false"
-            description="Display name of this service" />
+            description="Display name of this service"
+            required="true" />
         <property name="serviceDescription" required="false"
             description="Description of this service" />
         <property name="binaryPathName"
@@ -133,7 +139,7 @@ FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALA
         <property name="stopStartOnNoop" kind="boolean" required="false" default="true"
                   category="Deployment" label="Stop and start on every deployment"
                   description="If set to true, this service is stopped and started when another component in the same package is deployed" />
-        <property name="startOnDeploy" kind="boolean" default="true" />
+        <property name="startOnDeploy" category="Deployment" kind="boolean" default="true" />
 
         <method name="start" description="Start Service" delegate="dispatcherInvoker" script="windows/start-service.ps1"/>
         <method name="stop"  description="Stop Service" delegate="dispatcherInvoker" script="windows/stop-service.ps1"/>
