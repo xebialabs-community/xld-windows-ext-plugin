@@ -34,6 +34,10 @@ dependencies {
   compile "com.xebialabs.deployit:udm-plugin-api:$apiVersion"
 }
 
+if (!project.hasProperty('release.useLastTag')) {
+  project.ext['release.useLastTag'] = true
+}
+
 processResources.configure {
   filter ReplaceTokens, tokens: [
     'project.version': version.toString(),
