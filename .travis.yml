@@ -1,7 +1,4 @@
 language: java
-jdk:
-- oraclejdk7
-- openjdk6
 deploy:
   provider: releases
   api_key:
