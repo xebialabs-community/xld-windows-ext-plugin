@@ -15,8 +15,6 @@ xlDocker {
   runPortMapping = '14516:4516'
 }
 
-//version = "7.1.0"
-
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
@@ -44,6 +42,8 @@ processResources.configure {
 }
 
 license {
-  header rootProject.file('src/main/license/xebialabs_community.license')
-  strictCheck false
+  header rootProject.file('License.md')
+  strictCheck true
+  ext.year = Calendar.getInstance().get(Calendar.YEAR)
+  ext.name = 'XEBIALABS'
 }

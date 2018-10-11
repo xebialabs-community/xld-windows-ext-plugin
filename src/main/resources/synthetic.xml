@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2018 XEBIALABS
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+-->
 <synthetic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xmlns="http://www.xebialabs.com/deployit/synthetic"
            xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
-
-<!--
-THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS
-FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
--->
 <!--
      *********************************************************************************
      *    Windows dotNet Service Installation
@@ -33,12 +38,10 @@ FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALA
         <property name="discoverScript" default="windows/inspect-services.ps1" hidden="true" />
 
         <property name="serviceName" required="false"
-                  description="Name of the service. Defaults to the name of the deployed if not specified"
-                  required="true" />
+                  description="Name of the service. Defaults to the name of the deployed if not specified" />
         <property name="serviceDisplayName" required="false"
-                  description="Display name of this service"
-                  required="true"/>
-	<property name="DotNetVersion" default="v4.0.30319"
+                  description="Display name of this service" />
+	      <property name="DotNetVersion" default="v4.0.30319"
                   description="Dot Net Version v4.5, v4.0, v2.0" />
         <property name="serviceDescription"
                   required="false"
@@ -102,11 +105,9 @@ FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALA
         <property name="discoverProcessScript" default="windows/inspect-services.ps1" hidden="true" />
 
         <property name="serviceName" required="false"
-            description="Name of the service. Defaults to the name of the deployed if not specified"
-            required="true" />
+            description="Name of the service. Defaults to the name of the deployed if not specified" />
         <property name="serviceDisplayName" required="false"
-            description="Display name of this service"
-            required="true" />
+            description="Display name of this service" />
         <property name="serviceDescription" required="false"
             description="Description of this service" />
         <property name="binaryPathName"
