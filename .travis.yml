@@ -1,15 +1,30 @@
 language: java
+before_install:
+  - openssl aes-256-cbc -K $encrypted_d99495bef41d_key -iv $encrypted_d99495bef41d_iv
+    -in deploy_key.enc -out /tmp/deploy_key -d
+  - eval "$(ssh-agent -s)"
+  - echo -e "Host $DIST_HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - chmod 600 /tmp/deploy_key
+  - ssh-add /tmp/deploy_key
 deploy:
-  provider: releases
-  api_key:
-    secure: Rgb/NMcsAohpjPtZnpRfCODzRg0jECIxYMdPTG0J1g8h53ulZUPcWrmsPqRC/WSxaA/hBzLuogblquAzLPn3u+LM0hFb7rIapIz/vBaHfKOHT3up2Q8sR008wlIpmH+syR1rjOyXeZ+2gi7JnxfGMrUO8oW4l8E9TT30oulnogRF6H+MvlFdOrBxk27PyBgAfyXbWnrM5qNqEBMoN7OmWlsVIHjq5yY5G6K0+RCf09vMnlNGfsesV2QZ7/lbZlc3EnWZMWNJLxpcoO6U2k3Xb15fJnLUkYz2SjielbgMkKnd2+VeVYSMLsV7TE3m0JYGdrV+tPOPGV4OUe/k0AKFcbk2tnpxX8aHA4ru7qFqWWLslF4TCIUlD5kseRTPeTHQR5PoZw+k+U/HyT7qkaN6e1CElp4SdyBfyFlWWHhbYHZjELOPnlqb4Ti9GsTudTQwTifnfzjRYoXyI5dAw2KjSqdLYc10VCXnu0w0l8Cu2D20A6miOf7VxnMNYBIPPCr91r5jjjDEW59ofAaVoGUInxgu/pEN5VXG81sIS7iHFGFzPuXPD+C5/usHQKml5Ef4d20tPxdKNjB/SY6971wAx9uXFw7SFcZmfWOop7mytpMIGppEYN/CxVm3mg3v9pjFQzvF1aqw3vXCASTss/mNxDaKK+SCZX9qzfsaGVo+97I=
-  file_glob: true
-  file: build/distributions/*
-  skip_cleanup: true
-  on:
-    all_branches: true
-    tags: true
-    repo: xebialabs-community/xld-windows-ext-plugin
+    - provider: releases
+      api_key:
+        secure: Rgb/NMcsAohpjPtZnpRfCODzRg0jECIxYMdPTG0J1g8h53ulZUPcWrmsPqRC/WSxaA/hBzLuogblquAzLPn3u+LM0hFb7rIapIz/vBaHfKOHT3up2Q8sR008wlIpmH+syR1rjOyXeZ+2gi7JnxfGMrUO8oW4l8E9TT30oulnogRF6H+MvlFdOrBxk27PyBgAfyXbWnrM5qNqEBMoN7OmWlsVIHjq5yY5G6K0+RCf09vMnlNGfsesV2QZ7/lbZlc3EnWZMWNJLxpcoO6U2k3Xb15fJnLUkYz2SjielbgMkKnd2+VeVYSMLsV7TE3m0JYGdrV+tPOPGV4OUe/k0AKFcbk2tnpxX8aHA4ru7qFqWWLslF4TCIUlD5kseRTPeTHQR5PoZw+k+U/HyT7qkaN6e1CElp4SdyBfyFlWWHhbYHZjELOPnlqb4Ti9GsTudTQwTifnfzjRYoXyI5dAw2KjSqdLYc10VCXnu0w0l8Cu2D20A6miOf7VxnMNYBIPPCr91r5jjjDEW59ofAaVoGUInxgu/pEN5VXG81sIS7iHFGFzPuXPD+C5/usHQKml5Ef4d20tPxdKNjB/SY6971wAx9uXFw7SFcZmfWOop7mytpMIGppEYN/CxVm3mg3v9pjFQzvF1aqw3vXCASTss/mNxDaKK+SCZX9qzfsaGVo+97I=
+      file_glob: true
+      file: build/distributions/*
+      skip_cleanup: true
+      on:
+        all_branches: true
+        tags: true
+        repo: xebialabs-community/xld-windows-ext-plugin
+    - provider: script
+      skip_cleanup: true
+      script: rsync --update -raz -i $TRAVIS_BUILD_DIR/build/distributions/*.xldp  $DIST_USER@$DIST_HOST:$DIST_PATH/${TRAVIS_REPO_SLUG#*/}/
+      on:
+        all_branches: true
+#        tags: true
+        repo: xebialabs-community/xld-windows-ext-plugin
 notifications:
   slack:
     secure: aS9EfyxP3VS+267X1qmLHwWkoPvwuRRib6bMgpoa4QIfa31s0DxknRjBy3LXAZz0ScPs9T8v79/R+gFGnv7zqOPy6BJxmJKf2eVzZDLL6KCdLsinKGqsWS2+NlsciKyQZapb/OqpRzFaD6dJQIwEDRW3Q1gOhRRKWZTMLehpXqVbu7EeRUABCviNYw4QtYy1Q40v2hADtXfAPIjdG9iQU+L62nYT1NPcwGrjA8G5A7hxN63wKqBdHa7unkSCT0TqimgDq1Is8lPiKLSfgBnml8sLMTJYAhp9zGxLtoOurzu5cvvZTO6pX6olAPw+L9eWYF9S3MEO71PBw8Cb2F/uRWPWjpuD1V6r4FgIm90q2+TA+w48kfiAz5DEufVpDTQts+Z/2G8/89AKOptAcNevgxJSJZXzs+q0joUeI/3d5VJuYH4STTqfR3DnCivHwO0wbKfPhgPnB/NEW/K9t7vuqGQ1G4aqwcZ3x4+VCZGD5gQoKn3ofg1j59rivzLQCX260rP7PaZqkfh17ZN5WNHS6JqIUfmd4X1nD1GbZK9CVCD0o3lidiXaCvw4JRgmNdMbZ07C0iMdifvZWWO6Y/aseez0vgBbEBG6331qW0Y76ENs/unlcLYIme99yHF2cbtx5/BVsDNdkgLsS04ZbD4fd8FISiMJ85HR23gOYNPwmNw=
+
